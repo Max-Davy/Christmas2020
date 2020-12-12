@@ -39,6 +39,9 @@ an3tom
             position: absolute;
             top: 50%;
             left: 50%;
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
             z-index: 2;
             background-color: rgba(255, 255, 255, 0);
@@ -49,9 +52,12 @@ an3tom
             position: absolute;
             top: 60%;
             left: 50%;
+            -moz-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
             z-index: 3;
-            color: rgb(122, 68, 52);
+            color: #446F94;
             font-family: Handwriting !important;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -85,6 +91,24 @@ an3tom
             }
             100% {
                 -webkit-transform: rotate(360deg);
+            }
+        }
+        
+        @-ms-keyframes spin {
+            0% {
+                -ms-transform: rotate(0deg);
+            }
+            100% {
+                -ms-transform: rotate(360deg);
+            }
+        }
+        
+        @-moz-keyframes spin {
+            0% {
+                -moz-transform: rotate(0deg);
+            }
+            100% {
+                -moz-transform: rotate(360deg);
             }
         }
         
