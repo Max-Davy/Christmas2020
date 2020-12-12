@@ -1,0 +1,166 @@
+an3tom
+<!DOCTYPE html>
+<html manifest="manifest.appcache">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Merry Christmas!</title>
+    <style>
+        @font-face {
+            font-family: 'Handwriting';
+            src: url('./Font/Handwriting.ttf');
+        }
+        
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #btnPrintout {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 3;
+            color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+        
+        #pictureContainer {
+            background-image: url("./step1.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: auto;
+            height: auto;
+            height: 90%;
+            width: 90%;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0);
+        }
+        
+        #insideText {
+            margin: 0;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            color: rgb(122, 68, 52);
+            font-family: Handwriting !important;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size: 30pt;
+            max-width: 40%;
+        }
+        
+        #spinner {
+            color: white;
+            z-index: 1;
+            position: absolute;
+            top: calc(50% - 60px);
+            left: calc(50% - 60px);
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+        /* Safari */
+        
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        a {
+            color: DodgerBlue;
+        }
+    </style>
+    <script type="text/javascript">
+        var loaded = false;
+
+        function changeImage() {
+            var img = document.getElementById('pictureContainer');
+            style = img.currentStyle || window.getComputedStyle(img, false);
+            imageurl = style.backgroundImage.replace('url(', '').replace(')', '');
+            if (imageurl.includes("step1.png")) {
+                document.getElementById("pictureContainer").style.backgroundImage = 'url("./step2.png")';
+                document.getElementById("insideText").style.display = "block";
+                console.log("card opened");
+            } else {
+                document.getElementById("pictureContainer").style.backgroundImage = 'url("./step1.png")';
+                document.getElementById("insideText").style.display = "none";
+                console.log("card closed");
+            }
+        }
+
+        function getName() {
+            console.log(loaded);
+            if (!loaded) {
+                loaded = 1;
+                var name = getParameterByName("name") || "";
+                var text = getParameterByName("text") || "";
+                var response = "Wishing you a merry Christmas and blessed new year,<br>Max"
+
+                try {
+                    window.history.replaceState({
+                        page: 1
+                    }, document.title, "/Christmas2019/");
+                } catch (e) {}
+
+                if (text) {
+                    response = text
+                } else if (name) {
+                    response = "Dear " + name + ",<br>" + response;
+                    document.title = "Merry Christmas, " + name + "!"
+                }
+
+                document.getElementById("insideText").innerHTML = response;
+            }
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+</head>
+
+<body onload="getName();">
+    <div id="btnPrintout">Click card to open and close.<br><a href="./card.pdf" target="_blank">Downloadable Version</a></div>
+    <div id="pictureContainer" onclick="changeImage();"></div>
+    <div id="insideText" onclick="changeImage();" style="display:none;">Wishing you a merry Christmas and blessed new year,<br>Max</div>
+    <div id="spinner"></div>
+</body>
+
+</html>
